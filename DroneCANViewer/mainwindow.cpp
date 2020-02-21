@@ -48,20 +48,20 @@ MainWindow::MainWindow(QWidget *parent) :
     initMenus();
     initWidgets();
     initSignalsSlots();
+    initTimers();
 
     setWindowTitle(tr("DroneCAN Viewer"));
 
     // Attempt to load workspace settings
     loadWorkspaceSettings(DroneCan::Directory::defaultWorkspaceFile());
 
-    Debug(1, "MainWindow created");
+    DCDebug << "MainWindow created";
 }
 
 
 MainWindow::~MainWindow()
 {
-    // TODO - Improve this debug message
-    Debug(1, "~MainWindow destroyed");
+    DCDebug << "~MainWindow destroyed";
 
     // Save the workpace settings
     saveWorkspaceSettings(DroneCan::Directory::defaultWorkspaceFile());
@@ -72,8 +72,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::onClose()
 {
-    // TODO - Improve this debug message
-    Debug(1, "MainWindow closed");
+    DCDebug << "MainWindow closed";
 
     close();
 }
@@ -93,6 +92,15 @@ void MainWindow::initWidgets()
     addDockedWidget(new CANMonitorWidget(this), ui->action_canviewer);
 
     addDockedWidget(new DeviceListWidget(this), ui->actionDevice_List);
+}
+
+
+void MainWindow::initTimers()
+{
+    // 4Hz generic update for all widgets
+    widgetUpdateTimer = new QTimer(this);
+    connect(widgetUpdateTimer, SIGNAL(timeout()), this, SLOT(updateWidgets()));
+    widgetUpdateTimer->start(250);
 }
 
 
@@ -255,8 +263,7 @@ bool MainWindow::addDockedWidget(DockManager *mgr, QAction *action)
 {
     if (!mgr)
     {
-        // TODO - Fix this debug msg
-        qDebug() << "null ptr supplied";
+        DCWarning << "nullptr supplied to addDockedWidget";
 
         return false;
     }
@@ -270,8 +277,7 @@ bool MainWindow::addDockedWidget(DockManager *mgr, QAction *action)
 
         if (dock->objectName() == name)
         {
-            // TODO - Fix debug msg
-            qDebug() << "Docked widget already exists with name" << name;
+            DCWarning << "Docked widget already exists with name" << name;
             return false;
         }
     }
@@ -320,4 +326,15 @@ bool MainWindow::removeDockedWidget(QString title)
     }
 
     return false;
+}
+
+
+void MainWindow::updateWidgets()
+{
+    for (auto* dock : dockedWidgets)
+    {
+        if (!dock) continue;
+
+        dock->refresh();
+    }
 }

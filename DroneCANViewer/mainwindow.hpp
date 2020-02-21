@@ -27,6 +27,8 @@ SOFTWARE.
 
 #include <qmainwindow.h>
 #include <qlist.h>
+#include <qtimer.h>
+
 
 #include "adapter.hpp"
 #include "dc_widget.hpp"
@@ -52,12 +54,16 @@ public slots:
 
     void showAboutInfo();
 
+protected slots:
+    void updateWidgets();
+
 protected:
     Ui::MainWindow *ui = nullptr;
 
     void initMenus();
     void initSignalsSlots();
     void initWidgets();
+    void initTimers();
 
     bool loadWorkspaceSettings(QString filename = QString());
     bool saveWorkspaceSettings(QString filename = QString());
@@ -68,6 +74,8 @@ protected:
     bool removeDockedWidget(QString title);
 
     QList<DockManager*> dockedWidgets;
+
+    QTimer *widgetUpdateTimer;
 };
 
 #endif // MAINWINDOW_H

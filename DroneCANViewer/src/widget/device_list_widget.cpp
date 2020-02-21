@@ -36,7 +36,5 @@ DeviceListWidget::DeviceListWidget(QWidget *parent) : DCWidget("deviceList", par
 
 void DeviceListWidget::updateDisplay()
 {
-    static int n = 0;
-
-    qDebug() << "list:" << n++;
+    // TODO
 }

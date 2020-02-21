@@ -63,13 +63,13 @@ DockManager::DockManager(const QString &title, QWidget *widget, QWidget *parent,
     // Prevent deletion when the widget closes
     setAttribute(Qt::WA_DeleteOnClose, false);
 
-    qDebug() << "creating DockManager -" << objectName();
+    DCDebug << "creating new DockManager -" << title;
 }
 
 
 DockManager::~DockManager()
 {
-    qDebug() << "deleting DockManager -" << objectName();
+    DCDebug << "destroying DockManager -" << objectName();
 }
 
 

@@ -23,8 +23,18 @@ SOFTWARE.
 **/
 
 
-// TODO - Add a proper debug handler here...
-
+#include <qdatetime.h>
 #include <qdebug.h>
 
-#define Debug(lvl, msg) qDebug() << msg
+namespace DroneCAN {
+
+#define DCDebug qDebug()
+#define DCInfo qInfo()
+#define DCWarning qWarning()
+#define DCCritical qCritical()
+#define DCFatal qFatal()
+
+void setDebugLevel(uint8_t level);
+void debugHandler(QtMsgType msgType, const QMessageLogContext &context, const QString &msg);
+
+}

@@ -37,6 +37,7 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         src/can/adapter.cpp \
+        src/debug.cpp \
         src/directory.cpp \
         src/widget/about_widget.cpp \
         src/widget/can_monitor_widget.cpp \
