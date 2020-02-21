@@ -22,41 +22,23 @@ SOFTWARE.
 
 **/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef ABOUT_WIDGET_HPP
+#define ABOUT_WIDGET_HPP
 
-#include <QMainWindow>
+#include <qdialog.h>
 
-#include "adapter.hpp"
+#include "ui_about.h"
 
-namespace Ui {
-class MainWindow;
-}
 
-class MainWindow : public QMainWindow
+class AboutWidget : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-
-public slots:
-    void onClose();
-
-    void loadWorkspace();
-    void saveWorkspace();
-
-    void showAboutInfo();
+    AboutWidget(QWidget *parent = nullptr);
 
 protected:
-    Ui::MainWindow *ui = nullptr;
-
-    void initMenus();
-    void initSignalsSlots();
-
-    bool loadWorkspaceSettings(QString filename = QString());
-    bool saveWorkspaceSettings(QString filename = QString());
+    Ui::aboutForm ui;
 };
 
-#endif // MAINWINDOW_H
+#endif // ABOUT_WIDGET_HPP

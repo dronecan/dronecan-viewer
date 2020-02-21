@@ -39,6 +39,8 @@ namespace DroneCan::Directory
     QString workspaceDirectory();
     QString defaultWorkspaceFile();
 
+    QString logDirectory();
+
 }
 
 #endif // DIRECTORY_HPP

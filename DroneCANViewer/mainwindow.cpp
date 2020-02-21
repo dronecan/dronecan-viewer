@@ -32,6 +32,8 @@ SOFTWARE.
 #include "adapter.hpp"
 #include "directory.hpp"
 
+#include "about_widget.hpp"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -86,6 +88,8 @@ void MainWindow::initSignalsSlots()
 {
     connect(ui->actionE_xit, SIGNAL(triggered()), this, SLOT(onClose()));
 
+    connect(ui->action_About, SIGNAL(triggered()), this, SLOT(showAboutInfo()));
+
     connect(ui->action_Load_Workspace, SIGNAL(triggered()), this, SLOT(loadWorkspace()));
     connect(ui->action_Save_Workspace, SIGNAL(triggered()), this, SLOT(saveWorkspace()));
 }
@@ -96,7 +100,11 @@ void MainWindow::initSignalsSlots()
  */
 void MainWindow::showAboutInfo()
 {
+    AboutWidget *about = new AboutWidget(this);
 
+    about->setWindowModality(Qt::ApplicationModal);
+
+    about->exec();
 }
 
 

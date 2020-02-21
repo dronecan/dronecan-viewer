@@ -67,4 +67,10 @@ QString defaultWorkspaceFile()
     return workspaceDirectory() + "default.wsf";
 }
 
+
+QString logDirectory()
+{
+    return localPath() + "log" + QDir::separator();
+}
+
 }

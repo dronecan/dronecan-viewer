@@ -22,41 +22,34 @@ SOFTWARE.
 
 **/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#include "about_widget.hpp"
+#include "build_info.hpp"
+#include "version.hpp"
 
-#include <QMainWindow>
 
-#include "adapter.hpp"
-
-namespace Ui {
-class MainWindow;
-}
-
-class MainWindow : public QMainWindow
+AboutWidget::AboutWidget(QWidget *parent) : QDialog(parent)
 {
-    Q_OBJECT
+    ui.setupUi(this);
 
-public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    setWindowTitle(tr("DroneCAN Viewer"));
 
-public slots:
-    void onClose();
+    setAttribute(Qt::WA_DeleteOnClose, true);
 
-    void loadWorkspace();
-    void saveWorkspace();
+    // Format the build date
+    QString bd = QString::number(DCV_BUILD_YEAR) + "-" +
+                 QString::number(DCV_BUILD_MONTH) + "-" +
+                 QString::number(DCV_BUILD_DAY);
 
-    void showAboutInfo();
+    ui.buildDate->setText(bd);
 
-protected:
-    Ui::MainWindow *ui = nullptr;
+    ui.commitHash->setText(DCV_BUILD_COMMIT_HASH);
 
-    void initMenus();
-    void initSignalsSlots();
+    ui.version->setText(DroneCan::Version::version);
 
-    bool loadWorkspaceSettings(QString filename = QString());
-    bool saveWorkspaceSettings(QString filename = QString());
-};
+    // Set the URL links
+    ui.githubLabel->setTextFormat(Qt::RichText);
+    ui.githubLabel->setOpenExternalLinks(true);
+    ui.githubLabel->setText("<a href='https://github.com/dronecan'>github.com/dronecan</a>");
 
-#endif // MAINWINDOW_H
+    connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+}

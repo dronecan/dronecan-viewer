@@ -29,23 +29,29 @@ CONFIG += c++11
 
 INCLUDEPATH += \
         src/ \
-        src/can/
+        src/can/ \
+        src/widget/ \
+        ui_tmp/
 
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
         src/can/adapter.cpp \
-        src/directory.cpp
+        src/directory.cpp \
+        src/widget/about_widget.cpp
 
 HEADERS += \
         mainwindow.h \
         src/build_info.hpp \
         src/can/adapter.hpp \
         src/debug.hpp \
-        src/directory.hpp
+        src/directory.hpp \
+        src/version.hpp \
+        src/widget/about_widget.hpp
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+        ui/about.ui
 
 #Set the location for the generated ui_xxxx.h files
 UI_DIR = ui_tmp/
@@ -62,3 +68,6 @@ win32{
         QMAKE_POST_LINK += $$[QT_INSTALL_BINS]\windeployqt -opengl -printsupport $$shell_path($$quote($$PWD\wininstall\DroneCANViewer.exe)) $$escape_expand(\n\t)
     }
 }
+
+RESOURCES += \
+    resources.qrc
