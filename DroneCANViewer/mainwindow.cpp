@@ -26,6 +26,7 @@ SOFTWARE.
 #include "ui_mainwindow.h"
 
 #include "debug.hpp"
+#include "adapter.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -33,12 +34,32 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setWindowTitle(tr("DroneCAN Viewer"));
+    initMenus();
+    initSignalsSlots();
 
-    Debug(1, "hello world");
+    setWindowTitle(tr("DroneCAN Viewer"));
 }
+
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+/**
+ * @brief MainWindow::initMenus - Initialize menubar and menu items
+ */
+void MainWindow::initMenus()
+{
+
+}
+
+
+/**
+ * @brief MainWindow::initSignalsSlots - Initialize and connect various signals / slots
+ */
+void MainWindow::initSignalsSlots()
+{
+
 }

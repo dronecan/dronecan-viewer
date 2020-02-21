@@ -41,8 +41,11 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private:
-    Ui::MainWindow *ui;
+protected:
+    Ui::MainWindow *ui = nullptr;
+
+    void initMenus();
+    void initSignalsSlots();
 };
 
 #endif // MAINWINDOW_H
