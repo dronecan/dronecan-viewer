@@ -44,7 +44,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    // TODO - Improve this debug message
+    Debug(1, "~MainWindow destroyed");
     delete ui;
+}
+
+
+void MainWindow::onClose()
+{
+    // TODO - Improve this debug message
+    Debug(1, "MainWindow closed");
+
+    close();
 }
 
 
@@ -62,7 +73,7 @@ void MainWindow::initMenus()
  */
 void MainWindow::initSignalsSlots()
 {
-
+    connect(ui->actionE_xit, SIGNAL(triggered()), this, SLOT(onClose()));
 }
 
 
