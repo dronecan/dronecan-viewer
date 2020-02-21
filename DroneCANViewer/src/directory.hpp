@@ -27,7 +27,7 @@ SOFTWARE.
 
 #include <qstring.h>
 
-namespace DroneCan::Directory
+namespace DroneCAN::Directory
 {
 
     QString escapePath(QString path);

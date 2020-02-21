@@ -27,7 +27,7 @@ SOFTWARE.
 #include "directory.hpp"
 
 
-namespace DroneCan::Directory {
+namespace DroneCAN::Directory {
 
 
 /**

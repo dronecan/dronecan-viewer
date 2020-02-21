@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle(tr("DroneCAN Viewer"));
 
     // Attempt to load workspace settings
-    loadWorkspaceSettings(DroneCan::Directory::defaultWorkspaceFile());
+    loadWorkspaceSettings(DroneCAN::Directory::defaultWorkspaceFile());
 
     DCDebug << "MainWindow created";
 }
@@ -64,7 +64,7 @@ MainWindow::~MainWindow()
     DCDebug << "~MainWindow destroyed";
 
     // Save the workpace settings
-    saveWorkspaceSettings(DroneCan::Directory::defaultWorkspaceFile());
+    saveWorkspaceSettings(DroneCAN::Directory::defaultWorkspaceFile());
 
     delete ui;
 }
@@ -148,7 +148,7 @@ bool MainWindow::loadWorkspaceSettings(QString filename)
         // TODO - Better filtering
         filename = QFileDialog::getOpenFileName(this,
                                                 tr("Load Workspace File"),
-                                                DroneCan::Directory::workspaceDirectory(),
+                                                DroneCAN::Directory::workspaceDirectory(),
                                                 "(*.wsf)");
         // Still empty?
         if (filename.isEmpty())
@@ -218,7 +218,7 @@ bool MainWindow::saveWorkspaceSettings(QString filename)
     {
         filename = QFileDialog::getSaveFileName(this,
                                                 tr("Save Workspace File"),
-                                                DroneCan::Directory::workspaceDirectory(),
+                                                DroneCAN::Directory::workspaceDirectory(),
                                                 "(*.wsf)");
 
         // Still empty?

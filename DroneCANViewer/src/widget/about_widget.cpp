@@ -44,7 +44,7 @@ AboutWidget::AboutWidget(QWidget *parent) : QDialog(parent)
 
     ui.commitHash->setText(DCV_BUILD_COMMIT_HASH);
 
-    ui.version->setText(DroneCan::Version::version);
+    ui.version->setText(DroneCAN::Version::version);
 
     // Set the URL links
     ui.githubLabel->setTextFormat(Qt::RichText);
