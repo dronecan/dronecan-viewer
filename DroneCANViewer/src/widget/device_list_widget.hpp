@@ -22,30 +22,28 @@ SOFTWARE.
 
 **/
 
-
-#ifndef CAN_MONITOR_WIDGET_HPP
-#define CAN_MONITOR_WIDGET_HPP
-
-#include "ui_can_viewer.h"
+#ifndef DEVICE_LIST_WIDGET_HPP
+#define DEVICE_LIST_WIDGET_HPP
 
 #include "dc_widget.hpp"
+#include "ui_device_list.h"
 
 
 /**
- * @brief The CANMonitorWidget class displays CAN bus traffic
+ * @brief The DeviceListWidget displays a list of the DroneCAN devices currently "live" on the CAN bus
  */
-class CANMonitorWidget : public DCWidget
+class DeviceListWidget : public DCWidget
 {
     Q_OBJECT
 
 public:
-    CANMonitorWidget(QWidget *parent = nullptr);
+    DeviceListWidget(QWidget *parent = nullptr);
 
 public slots:
     virtual void updateDisplay() override;
 
 protected:
-    Ui::can_monitor ui;
+    Ui::device_list ui;
 };
 
-#endif // CAN_MONITOR_WIDGET_HPP
+#endif // DEVICE_LIST_WIDGET_HPP

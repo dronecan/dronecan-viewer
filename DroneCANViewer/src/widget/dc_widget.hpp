@@ -31,6 +31,8 @@ SOFTWARE.
 #include <QCloseEvent>
 #include <QAction>
 
+#include "debug.hpp"
+
 
 /**
  * @brief The DCWidget class is a wrapper around QWidget that provides some common functions

@@ -23,29 +23,20 @@ SOFTWARE.
 **/
 
 
-#ifndef CAN_MONITOR_WIDGET_HPP
-#define CAN_MONITOR_WIDGET_HPP
-
-#include "ui_can_viewer.h"
-
-#include "dc_widget.hpp"
+#include "device_list_widget.hpp"
 
 
-/**
- * @brief The CANMonitorWidget class displays CAN bus traffic
- */
-class CANMonitorWidget : public DCWidget
+DeviceListWidget::DeviceListWidget(QWidget *parent) : DCWidget("deviceList", parent)
 {
-    Q_OBJECT
+    ui.setupUi(this);
 
-public:
-    CANMonitorWidget(QWidget *parent = nullptr);
+    setWindowTitle(tr("Device List"));
+}
 
-public slots:
-    virtual void updateDisplay() override;
 
-protected:
-    Ui::can_monitor ui;
-};
+void DeviceListWidget::updateDisplay()
+{
+    static int n = 0;
 
-#endif // CAN_MONITOR_WIDGET_HPP
+    qDebug() << "list:" << n++;
+}

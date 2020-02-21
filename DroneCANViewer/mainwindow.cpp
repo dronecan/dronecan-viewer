@@ -25,7 +25,7 @@ SOFTWARE.
 #include <qfiledialog.h>
 #include <qsettings.h>
 
-#include "mainwindow.h"
+#include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
 #include "debug.hpp"
@@ -34,6 +34,7 @@ SOFTWARE.
 
 #include "about_widget.hpp"
 #include "can_monitor_widget.hpp"
+#include "device_list_widget.hpp"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -52,6 +53,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Attempt to load workspace settings
     loadWorkspaceSettings(DroneCan::Directory::defaultWorkspaceFile());
+
+    Debug(1, "MainWindow created");
 }
 
 
@@ -88,6 +91,8 @@ void MainWindow::initMenus()
 void MainWindow::initWidgets()
 {
     addDockedWidget(new CANMonitorWidget(this), ui->action_canviewer);
+
+    addDockedWidget(new DeviceListWidget(this), ui->actionDevice_List);
 }
 
 
@@ -292,7 +297,7 @@ bool MainWindow::addDockedWidget(DockManager *mgr, QAction *action)
 
 bool MainWindow::addDockedWidget(QWidget *widget, QAction *action)
 {
-    auto* mgr = new DockManager(widget->objectName(), widget, this);
+    auto* mgr = new DockManager(widget->windowTitle(), widget, this);
 
     return addDockedWidget(mgr, action);
 }
