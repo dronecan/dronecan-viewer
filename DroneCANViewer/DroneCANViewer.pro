@@ -24,12 +24,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
+INCLUDEPATH += \
+        src/ \
+        src/can/
+
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        src/can/adapter.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+        src/can/adapter.hpp \
+        src/debug.hpp
 
 FORMS += \
         mainwindow.ui

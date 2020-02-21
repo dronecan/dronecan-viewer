@@ -22,23 +22,9 @@ SOFTWARE.
 
 **/
 
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
 
-#include "debug.hpp"
+// TODO - Add a proper debug handler here...
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
+#include <qdebug.h>
 
-    setWindowTitle(tr("DroneCAN Viewer"));
-
-    Debug(1, "hello world");
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+#define Debug(lvl, msg) qDebug() << msg

@@ -22,23 +22,62 @@ SOFTWARE.
 
 **/
 
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-
 #include "debug.hpp"
+#include "adapter.hpp"
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+
+DroneCANInterface::DroneCANInterface(QObject *parent) : QThread(parent)
 {
-    ui->setupUi(this);
 
-    setWindowTitle(tr("DroneCAN Viewer"));
-
-    Debug(1, "hello world");
 }
 
-MainWindow::~MainWindow()
+
+DroneCANInterface::~DroneCANInterface()
 {
-    delete ui;
+
+}
+
+
+void DroneCANInterface::run()
+{
+    // TODO
+}
+
+
+void DroneCANInterface::stop()
+{
+    // TODO
+}
+
+
+/**
+ * @brief DroneCANInterface::GetPlugins - List the available CAN adapter plugins
+ * @return QStringList containing names of detected plugins
+ */
+QStringList DroneCANInterface::GetPlugins()
+{
+    return QCanBus::instance()->plugins();
+}
+
+
+/**
+ * @brief DroneCANInterface::GetDevices - List the devices available for the provided plugin
+ * @param pluginName - Name of the CAN adapter plugin
+ * @param errorMsg - Optional pointer to store an error message
+ * @return - List of available devices
+ */
+QStringList DroneCANInterface::GetDevices(const QString pluginName, QString *errorMsg)
+{
+    auto available = QCanBus::instance()->availableDevices(pluginName, errorMsg);
+
+    QStringList devices;
+
+    for (auto info : available)
+    {
+        if (info.isVirtual()) continue;
+
+        devices.append(info.name());
+    }
+
+    return devices;
 }

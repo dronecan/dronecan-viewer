@@ -22,23 +22,36 @@ SOFTWARE.
 
 **/
 
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#ifndef _DC_CAN_H_
+#define _DC_CAN_H_
 
-#include "debug.hpp"
+#include <qthread.h>
+#include <qcanbus.h>
+#include <qpluginloader.h>
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+
+/**
+ * @brief The DroneCANAdapter class provides a device-agnostic interface to the CAN bus.
+ *
+ * The DroneCANAdapter class is threaded, and manages queued Tx and Rx CAN frames.
+ *
+ * Multi-frame messages are automatically handled, and presented to the decode thread once parsed.
+ */
+class DroneCANInterface : public QThread
 {
-    ui->setupUi(this);
+    Q_OBJECT
 
-    setWindowTitle(tr("DroneCAN Viewer"));
+public:
+    DroneCANInterface(QObject *parent = nullptr);
+    virtual ~DroneCANInterface();
 
-    Debug(1, "hello world");
-}
+    static QStringList GetPlugins();
+    static QStringList GetDevices(const QString pluginName, QString *errorMsg = nullptr);
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+public slots:
+    virtual void run() override;
+    void stop();
+};
+
+
+#endif // _DC_CAN_H_
