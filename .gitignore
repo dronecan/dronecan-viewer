@@ -1,0 +1,6 @@
+# Qt Files
+*.pro.user
+
+# Output directories
+debug/
+release/
