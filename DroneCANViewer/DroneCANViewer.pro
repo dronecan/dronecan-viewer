@@ -11,6 +11,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = DroneCANViewer
 TEMPLATE = app
 
+# Automatically generate version information on each build
+system(python script/build_version.py --prefix DCV --output src/build_info.hpp)
+
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -35,6 +38,7 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
+        src/build_info.hpp \
         src/can/adapter.hpp \
         src/debug.hpp
 

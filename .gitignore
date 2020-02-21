@@ -3,6 +3,9 @@
 *.stash
 Makefile*
 
+# Temporary build files
+build_info.hpp
+
 # Temporary ui files
 ui_*.h
 

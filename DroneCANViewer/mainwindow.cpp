@@ -28,6 +28,7 @@ SOFTWARE.
 #include "debug.hpp"
 #include "adapter.hpp"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -60,6 +61,15 @@ void MainWindow::initMenus()
  * @brief MainWindow::initSignalsSlots - Initialize and connect various signals / slots
  */
 void MainWindow::initSignalsSlots()
+{
+
+}
+
+
+/**
+ * @brief MainWindow::showAboutInfo - Display a dialog box containing application version info
+ */
+void MainWindow::showAboutInfo()
 {
 
 }

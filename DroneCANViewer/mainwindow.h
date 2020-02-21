@@ -46,6 +46,8 @@ protected:
 
     void initMenus();
     void initSignalsSlots();
+
+    void showAboutInfo();
 };
 
 #endif // MAINWINDOW_H
