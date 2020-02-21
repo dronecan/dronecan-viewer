@@ -45,7 +45,18 @@ HEADERS += \
 FORMS += \
         mainwindow.ui
 
+#Set the location for the generated ui_xxxx.h files
+UI_DIR = ui_tmp/
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+# Copy required files into the output directory
+win32{
+    CONFIG(release, debug|release){
+        QMAKE_POST_LINK += $$QMAKE_COPY $$shell_path($$quote($$shadowed($$PWD)\release\DroneCANViewer.exe)) $$shell_path($$quote($$PWD\wininstall\DroneCANViewer.exe)) $$escape_expand(\n\t)
+        QMAKE_POST_LINK += $$[QT_INSTALL_BINS]\windeployqt -opengl -printsupport $$shell_path($$quote($$PWD\wininstall\DroneCANViewer.exe)) $$escape_expand(\n\t)
+    }
+}
