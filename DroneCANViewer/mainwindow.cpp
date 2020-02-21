@@ -33,6 +33,7 @@ SOFTWARE.
 #include "directory.hpp"
 
 #include "about_widget.hpp"
+#include "can_monitor_widget.hpp"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -41,7 +42,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setDockNestingEnabled(true);
+
     initMenus();
+    initWidgets();
     initSignalsSlots();
 
     setWindowTitle(tr("DroneCAN Viewer"));
@@ -78,6 +82,12 @@ void MainWindow::onClose()
 void MainWindow::initMenus()
 {
 
+}
+
+
+void MainWindow::initWidgets()
+{
+    addDockedWidget(new CANMonitorWidget(this), ui->action_canviewer);
 }
 
 
@@ -161,6 +171,20 @@ bool MainWindow::loadWorkspaceSettings(QString filename)
 
     workspace.endGroup(); // "workspace"
 
+    workspace.beginGroup("windows");
+
+    for (auto *dock : dockedWidgets)
+    {
+        if (dock)
+        {
+            dock->loadSettings(workspace);
+
+            dock->updateActionState();
+        }
+    }
+
+    workspace.endGroup(); // "windows"
+
     return true;
 }
 
@@ -195,7 +219,9 @@ bool MainWindow::saveWorkspaceSettings(QString filename)
 
     workspace.clear();
 
+    workspace.beginGroup("application");
     // TODO - Set application version, etc
+    workspace.endGroup(); // "application"
 
     workspace.beginGroup("workspace");
 
@@ -204,5 +230,89 @@ bool MainWindow::saveWorkspaceSettings(QString filename)
 
     workspace.endGroup(); // "workspace"
 
+    workspace.beginGroup("windows");
+
+    for (auto *dock : dockedWidgets)
+    {
+        if (dock)
+        {
+            dock->saveSettings(workspace);
+        }
+    }
+
+    workspace.endGroup(); // "windows"
+
     return true;
+}
+
+
+bool MainWindow::addDockedWidget(DockManager *mgr, QAction *action)
+{
+    if (!mgr)
+    {
+        // TODO - Fix this debug msg
+        qDebug() << "null ptr supplied";
+
+        return false;
+    }
+
+    QString name = mgr->objectName();
+
+    // As widgets use name-based lookup, ensure there are no duplicates
+    for (auto dock : dockedWidgets)
+    {
+        if (!dock) continue;
+
+        if (dock->objectName() == name)
+        {
+            // TODO - Fix debug msg
+            qDebug() << "Docked widget already exists with name" << name;
+            return false;
+        }
+    }
+
+    if (action)
+    {
+        if (!action->isCheckable())
+        {
+            action->setCheckable(true);
+        }
+
+        mgr->setToggleAction(action);
+    }
+
+    dockedWidgets.append(mgr);
+    addDockWidget(Qt::LeftDockWidgetArea, mgr);
+
+    mgr->updateActionState();
+
+    return true;
+}
+
+
+bool MainWindow::addDockedWidget(QWidget *widget, QAction *action)
+{
+    auto* mgr = new DockManager(widget->objectName(), widget, this);
+
+    return addDockedWidget(mgr, action);
+}
+
+
+bool MainWindow::removeDockedWidget(QString title)
+{
+    for (int i = 0; i < dockedWidgets.count(); i++)
+    {
+        if (dockedWidgets.at(i)->objectName() == title)
+        {
+            auto* mgr = dockedWidgets.at(i);
+
+            dockedWidgets.removeAt(i);
+
+            delete mgr;
+
+            return true;
+        }
+    }
+
+    return false;
 }

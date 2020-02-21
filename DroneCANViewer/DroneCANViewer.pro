@@ -38,7 +38,9 @@ SOURCES += \
         mainwindow.cpp \
         src/can/adapter.cpp \
         src/directory.cpp \
-        src/widget/about_widget.cpp
+        src/widget/about_widget.cpp \
+        src/widget/can_monitor_widget.cpp \
+        src/widget/dc_widget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -47,9 +49,12 @@ HEADERS += \
         src/debug.hpp \
         src/directory.hpp \
         src/version.hpp \
-        src/widget/about_widget.hpp
+        src/widget/about_widget.hpp \
+        src/widget/can_monitor_widget.hpp \
+        src/widget/dc_widget.hpp
 
 FORMS += \
+        ui/can_viewer.ui \
         ui/mainwindow.ui \
         ui/about.ui
 

@@ -22,52 +22,18 @@ SOFTWARE.
 
 **/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
-#include <qmainwindow.h>
-#include <qlist.h>
-
-#include "adapter.hpp"
-#include "dc_widget.hpp"
+#include "can_monitor_widget.hpp"
 
 
-namespace Ui {
-class MainWindow;
+CANMonitorWidget::CANMonitorWidget(QWidget *parent) : DCWidget("CANMonitor", parent)
+{
+    ui.setupUi(this);
+
+    setWindowTitle(tr("CAN Monitor"));
 }
 
-class MainWindow : public QMainWindow
+
+void CANMonitorWidget::updateDisplay()
 {
-    Q_OBJECT
 
-public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-
-public slots:
-    void onClose();
-
-    void loadWorkspace();
-    void saveWorkspace();
-
-    void showAboutInfo();
-
-protected:
-    Ui::MainWindow *ui = nullptr;
-
-    void initMenus();
-    void initSignalsSlots();
-    void initWidgets();
-
-    bool loadWorkspaceSettings(QString filename = QString());
-    bool saveWorkspaceSettings(QString filename = QString());
-
-    bool addDockedWidget(DockManager *mgr, QAction *action = nullptr);
-    bool addDockedWidget(QWidget *widget, QAction *action = nullptr);
-
-    bool removeDockedWidget(QString title);
-
-    QList<DockManager*> dockedWidgets;
-};
-
-#endif // MAINWINDOW_H
+}

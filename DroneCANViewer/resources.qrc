@@ -2,5 +2,20 @@
     <qresource prefix="/">
         <file>resource/img/github.png</file>
         <file>resource/release_notes.txt</file>
+        <file>resource/img/add_circle.svg</file>
+        <file>resource/img/backspace.svg</file>
+        <file>resource/img/delete_list.svg</file>
+        <file>resource/img/edit.svg</file>
+        <file>resource/img/filter.svg</file>
+        <file>resource/img/flag.svg</file>
+        <file>resource/img/folder_open.svg</file>
+        <file>resource/img/pause.svg</file>
+        <file>resource/img/pause_circle.svg</file>
+        <file>resource/img/play_arrow.svg</file>
+        <file>resource/img/report.svg</file>
+        <file>resource/img/save.svg</file>
+        <file>resource/img/send.svg</file>
+        <file>resource/img/stop.svg</file>
+        <file>resource/img/info.svg</file>
     </qresource>
 </RCC>
