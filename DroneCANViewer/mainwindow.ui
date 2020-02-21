@@ -27,6 +27,9 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="action_Save_Workspace"/>
+    <addaction name="action_Load_Workspace"/>
+    <addaction name="separator"/>
     <addaction name="actionE_xit"/>
    </widget>
    <widget class="QMenu" name="menu_CAN">
@@ -67,6 +70,16 @@
   <action name="action_About">
    <property name="text">
     <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="action_Load_Workspace">
+   <property name="text">
+    <string>&amp;Load Workspace</string>
+   </property>
+  </action>
+  <action name="action_Save_Workspace">
+   <property name="text">
+    <string>&amp;Save Workspace</string>
    </property>
   </action>
  </widget>

@@ -22,41 +22,49 @@ SOFTWARE.
 
 **/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#include <qdir.h>
 
-#include <QMainWindow>
+#include "directory.hpp"
 
-#include "adapter.hpp"
 
-namespace Ui {
-class MainWindow;
+namespace DroneCan::Directory {
+
+
+/**
+ * @brief escapePath - Replace different separators with local separator
+ * @param path
+ * @return
+ */
+QString escapePath(QString path)
+{
+    path = path.replace("/", QDir::separator());
+    path = path.replace("\\", QDir::separator());
+
+    return path;
 }
 
-class MainWindow : public QMainWindow
+
+/**
+ * @brief localPath - Path local to the user where settings files, logs, etc are stored
+ * @return
+ */
+QString localPath()
 {
-    Q_OBJECT
+    QString path = QDir::homePath() + QDir::separator() + QString("dronecan") + QDir::separator();
 
-public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    return escapePath(path);
+}
 
-public slots:
-    void onClose();
 
-    void loadWorkspace();
-    void saveWorkspace();
+QString workspaceDirectory()
+{
+    return localPath() + "workspace" + QDir::separator();
+}
 
-protected:
-    Ui::MainWindow *ui = nullptr;
 
-    void initMenus();
-    void initSignalsSlots();
+QString defaultWorkspaceFile()
+{
+    return workspaceDirectory() + "default.wsf";
+}
 
-    void showAboutInfo();
-
-    bool loadWorkspaceSettings(QString filename = QString());
-    bool saveWorkspaceSettings(QString filename = QString());
-};
-
-#endif // MAINWINDOW_H
+}

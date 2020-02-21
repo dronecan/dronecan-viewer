@@ -34,13 +34,15 @@ INCLUDEPATH += \
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-        src/can/adapter.cpp
+        src/can/adapter.cpp \
+        src/directory.cpp
 
 HEADERS += \
         mainwindow.h \
         src/build_info.hpp \
         src/can/adapter.hpp \
-        src/debug.hpp
+        src/debug.hpp \
+        src/directory.hpp
 
 FORMS += \
         mainwindow.ui

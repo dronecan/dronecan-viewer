@@ -22,41 +22,23 @@ SOFTWARE.
 
 **/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef DIRECTORY_HPP
+#define DIRECTORY_HPP
 
-#include <QMainWindow>
+#include <qstring.h>
 
-#include "adapter.hpp"
+namespace DroneCan::Directory
+{
 
-namespace Ui {
-class MainWindow;
+    QString escapePath(QString path);
+
+    // Functions for accessing various application directories
+    QString localPath();
+
+    // Workspace directory / files
+    QString workspaceDirectory();
+    QString defaultWorkspaceFile();
+
 }
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
-
-public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-
-public slots:
-    void onClose();
-
-    void loadWorkspace();
-    void saveWorkspace();
-
-protected:
-    Ui::MainWindow *ui = nullptr;
-
-    void initMenus();
-    void initSignalsSlots();
-
-    void showAboutInfo();
-
-    bool loadWorkspaceSettings(QString filename = QString());
-    bool saveWorkspaceSettings(QString filename = QString());
-};
-
-#endif // MAINWINDOW_H
+#endif // DIRECTORY_HPP
