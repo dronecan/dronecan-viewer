@@ -1,5 +1,10 @@
 # Qt Files
 *.pro.user
+*.stash
+Makefile*
+
+# Temporary ui files
+ui_*.h
 
 # Output directories
 debug/
