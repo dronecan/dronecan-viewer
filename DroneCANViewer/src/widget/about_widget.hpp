@@ -37,6 +37,9 @@ class AboutWidget : public QDialog
 public:
     AboutWidget(QWidget *parent = nullptr);
 
+public slots:
+    void showReleaseNotes();
+
 protected:
     Ui::aboutForm ui;
 };

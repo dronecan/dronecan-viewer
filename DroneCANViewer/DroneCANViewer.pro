@@ -50,7 +50,7 @@ HEADERS += \
         src/widget/about_widget.hpp
 
 FORMS += \
-        mainwindow.ui \
+        ui/mainwindow.ui \
         ui/about.ui
 
 #Set the location for the generated ui_xxxx.h files

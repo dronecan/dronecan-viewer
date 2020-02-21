@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>resource/img/github.png</file>
+        <file>resource/release_notes.txt</file>
     </qresource>
 </RCC>

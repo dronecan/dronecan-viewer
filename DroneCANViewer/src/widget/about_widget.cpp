@@ -52,4 +52,12 @@ AboutWidget::AboutWidget(QWidget *parent) : QDialog(parent)
     ui.githubLabel->setText("<a href='https://github.com/dronecan'>github.com/dronecan</a>");
 
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+
+    connect(ui.showReleaseNotes, SIGNAL(released()), this, SLOT(showReleaseNotes()));
+}
+
+
+void AboutWidget::showReleaseNotes()
+{
+    // TODO - Show the release notes (open in external editor?)
 }
