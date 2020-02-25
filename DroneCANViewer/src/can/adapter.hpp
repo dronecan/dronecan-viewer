@@ -77,6 +77,8 @@ public slots:
     void stopLogging(void);
     bool isLogging(void);
 
+    void onFramesReceived(void);
+
 protected:
 
     void configureInterface(void);

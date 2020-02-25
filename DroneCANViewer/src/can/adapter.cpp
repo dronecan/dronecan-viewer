@@ -22,6 +22,8 @@ SOFTWARE.
 
 **/
 
+#include <qcanbusframe.h>
+
 #include "debug.hpp"
 #include "adapter.hpp"
 
@@ -154,6 +156,8 @@ bool DroneCANInterface::open(QString pluginName, QString interfaceName)
 
                 if (adapter->connectDevice())
                 {
+                    connect(adapter, SIGNAL(framesReceived()), this, SLOT(onFramesReceived()));
+
                     adapterName = plugin;
                     deviceName = device;
                     found = true;
@@ -215,8 +219,10 @@ bool DroneCANInterface::close()
     {
         if (adapter->state() == QCanBusDevice::ConnectedState)
         {
-            result = true;
+            disconnect(adapter, SIGNAL(framesReceived()), this, SLOT(onFramesReceived()));
             adapter->disconnectDevice();
+
+            result = true;
         }
 
         delete adapter;
@@ -239,6 +245,23 @@ bool DroneCANInterface::close()
 bool DroneCANInterface::isOpen()
 {
     return (adapter != nullptr) && (adapter->state() == QCanBusDevice::ConnectedState);
+}
+
+
+/**
+ * @brief DroneCANInterface::onFramesReceived - Called when new frames are available on the bus
+ */
+void DroneCANInterface::onFramesReceived()
+{
+    if (adapter)
+    {
+        while (adapter->framesAvailable() > 0)
+        {
+            auto frame = adapter->readFrame();
+
+            // TODO - Do something with the frame!
+        }
+    }
 }
 
 
