@@ -59,8 +59,8 @@ bool DroneCANTransfer::encodeFrame(QCanBusFrame &frame, QString *errorMsg)
         QByteArray bytes((const char*) data, length);
 
         // Encode the frame ID (ensure multi-frame is set to zero)
-        id.multiframe = 0;
-        frame.setFrameId(DroneCAN_encodeID(&id));
+        frameId.multiframe = 0;
+        frame.setFrameId(DroneCAN_encodeID(&frameId));
 
         frame.setPayload(bytes);
 

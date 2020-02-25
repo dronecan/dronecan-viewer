@@ -22,40 +22,21 @@ SOFTWARE.
 
 **/
 
-#ifndef DRONECAN_TRANSFER_HPP
-#define DRONECAN_TRANSFER_HPP
-
-#include <qcanbusframe.h>
+#ifndef DRONECAN_PACKET_HPP
+#define DRONECAN_PACKET_HPP
 
 #include "dronecan_id.h"
 
-// TODO - Move this elsewhere
-#define DRONECAN_MAX_TRANSFER_SIZE 384
 
-class DroneCANTransfer
+class DroneCANPacket
 {
-    DroneCANTransfer(uint8_t txferId);
+public:
+    DroneCANPacket();
 
-protected:
+    uint8_t data[384];
 
-    bool encodeFrame(QCanBusFrame &frame, QString *errorMsg = nullptr);
-    bool decodeFrame(QCanBusFrame &frame, QString *errorMsg = nullptr);
-
-protected:
-    //! Frame ID
-    DroneCAN_ID_t frameId;
-
-    //! Transfer ID
-    uint8_t transferId = 0;
-
-    //! Raw data buffer
-    uint8_t data[DRONECAN_MAX_TRANSFER_SIZE];
-
-    //! Transfer length
+    uint16_t id = 0;
     uint16_t length = 0;
-
-    //! Timestamp of transfer creation
-    uint64_t timestamp = 0;
 };
 
-#endif // DRONECAN_TRANSFER_HPP
+#endif // DRONECAN_PACKET_HPP

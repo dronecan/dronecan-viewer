@@ -31,15 +31,24 @@ INCLUDEPATH += \
         src/ \
         src/can/ \
         src/widget/ \
-        ../../dronecanc/inc \
-        ../../droncanc/src/ \
+        ../protocol/src/ \
+        ../protocol/static/ \
         ui_tmp/
 
 SOURCES += \
-        ../../dronecanc/src/dronecan_id.c \
+        ../protocol/static/dronecan_id.c \
+        ../protocol/src/DroneCANProtocol.c \
+        ../protocol/src/dronecan_packets.c \
+        ../protocol/src/dronecan_system_packets.c \
+        ../protocol/src/fielddecode.c \
+        ../protocol/src/fieldencode.c \
+        ../protocol/src/scaleddecode.c \
+        ../protocol/src/scaledencode.c \
+        dronecan_device.cpp \
         main.cpp \
         mainwindow.cpp \
         src/can/adapter.cpp \
+        src/can/dronecan_packet.cpp \
         src/can/dronecan_transfer.cpp \
         src/debug.cpp \
         src/directory.cpp \
@@ -49,11 +58,19 @@ SOURCES += \
         src/widget/device_list_widget.cpp
 
 HEADERS += \
-        ../../dronecanc/inc/dronecan_id.h \
-        ../../dronecanc/inc/dronecan_transfer.h \
+        ../protocol/static/dronecan_id.h \
+        ../protocol/src/DroneCANProtocol.h \
+        ../protocol/src/dronecan_packets.h \
+        ../protocol/src/dronecan_system_packets.h \
+        ../protocol/src/fielddecode.h \
+        ../protocol/src/fieldencode.h \
+        ../protocol/src/scaleddecode.h \
+        ../protocol/src/scaledencode.h \
+        dronecan_device.hpp \
         mainwindow.hpp \
         src/build_info.hpp \
         src/can/adapter.hpp \
+        src/can/dronecan_packet.hpp \
         src/can/dronecan_transfer.hpp \
         src/debug.hpp \
         src/directory.hpp \
