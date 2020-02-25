@@ -150,8 +150,7 @@ bool DroneCANInterface::open(QString pluginName, QString interfaceName)
 
             if (adapter)
             {
-                // TODO
-                // configureInterface(adapter)
+                configureInterface();
 
                 if (adapter->connectDevice())
                 {
@@ -243,6 +242,50 @@ bool DroneCANInterface::isOpen()
 }
 
 
+/**
+ * @brief DroneCANInterface::connectionString - Get a string description of the connection status of the CAN interface
+ * @return
+ */
+QString DroneCANInterface::connectionString()
+{
+    if (isOpen())
+    {
+        if (adapterName.isEmpty())
+        {
+            return tr("Connected");
+        }
+        else
+        {
+            return tr("Connected via ") + adapterName;
+        }
+    }
+    else
+    {
+        return tr("Disconnected");
+    }
+}
+
+
+/**
+ * @brief DroneCANInterface::configureInterface - Set QCanBusDevice parameters before opening
+ * @return
+ */
+void DroneCANInterface::configureInterface()
+{
+    if (adapter)
+    {
+        uint32_t baud = 1000000;
+
+        // TODO - Make the bit rate configurable here
+        adapter->setConfigurationParameter(QCanBusDevice::BitRateKey, baud);
+        adapter->setConfigurationParameter(QCanBusDevice::DataBitRateKey, baud);
+
+        adapter->setConfigurationParameter(QCanBusDevice::CanFdKey, false);
+        adapter->setConfigurationParameter(QCanBusDevice::LoopbackKey, false);
+    }
+}
+
+
 void DroneCANInterface::startLogging()
 {
     // TODO
@@ -252,6 +295,14 @@ void DroneCANInterface::startLogging()
 void DroneCANInterface::stopLogging()
 {
     // TODO
+}
+
+
+bool DroneCANInterface::isLogging()
+{
+    // TODO
+
+    return false;
 }
 
 

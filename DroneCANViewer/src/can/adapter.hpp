@@ -27,6 +27,7 @@ SOFTWARE.
 
 #include <qthread.h>
 #include <qcanbus.h>
+#include <qmutex.h>
 #include <qpluginloader.h>
 
 #include <qsettings.h>
@@ -56,13 +57,17 @@ public:
 
     bool open(QString pluginName = QString(), QString interfaceName = QString());
     bool close(void);
-
     bool isOpen(void);
+
+    QString connectionString(void);
 
     void resetCounters(void);
 
     void loadSettings(QSettings &settings);
     void saveSettings(QSettings &settings);
+
+    uint64_t getRxCount(void) const { return rxCount; }
+    uint64_t getTxCount(void) const { return txCount; }
 
 public slots:
     virtual void run() override;
@@ -70,19 +75,32 @@ public slots:
 
     void startLogging(void);
     void stopLogging(void);
+    bool isLogging(void);
 
 protected:
+
+    void configureInterface(void);
+
+
     bool running = false;
 
     QString lastError;
 
     QCanBusDevice *adapter = nullptr;
 
+
     QString adapterName;
     QString deviceName;
 
+    // Frame counters
     uint64_t rxCount = 0;
     uint64_t txCount = 0;
+
+    QMutex canMutex;
+    QMutex logMutex;
+
+    // Pending log data
+    QList<QStringList> pendingLogData;
 };
 
 
