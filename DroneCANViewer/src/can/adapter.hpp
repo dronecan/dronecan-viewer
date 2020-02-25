@@ -83,6 +83,8 @@ protected:
 
     void configureInterface(void);
 
+    bool readFrame(QCanBusFrame frame);
+    bool writeFrame(QCanBusFrame frame);
 
     bool running = false;
 

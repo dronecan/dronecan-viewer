@@ -257,11 +257,58 @@ void DroneCANInterface::onFramesReceived()
     {
         while (adapter->framesAvailable() > 0)
         {
-            auto frame = adapter->readFrame();
-
-            // TODO - Do something with the frame!
+            readFrame(adapter->readFrame());
         }
     }
+}
+
+
+/**
+ * @brief DroneCANInterface::writeFrame - Write a single frame to the CAN interface
+ * @param frame
+ * @return true if the frame was written successfully
+ */
+bool DroneCANInterface::writeFrame(QCanBusFrame frame)
+{
+    if (!isOpen())
+    {
+        return false;
+    }
+
+    if (!canMutex.tryLock(10))
+    {
+        DCWarning << "Could not secure lock for DroneCANInterface::writeFrame";
+        return false;
+    }
+
+    bool result = adapter->writeFrame(frame);
+
+    canMutex.unlock();
+
+    if (result)
+    {
+        // TODO - Add the transmitted packet to the logger
+    }
+
+    return result;
+}
+
+
+bool DroneCANInterface::readFrame(QCanBusFrame frame)
+{
+    if (!canMutex.tryLock(10))
+    {
+        DCWarning << "Could not secure lock for DroneCANInterface::readFrame";
+        return false;
+    }
+
+    // TODO
+
+    canMutex.unlock();
+
+    // TODO - Add the received packet to the logger
+
+    return true;
 }
 
 
