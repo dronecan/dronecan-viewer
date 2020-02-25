@@ -29,6 +29,9 @@ SOFTWARE.
 #include <qcanbus.h>
 #include <qpluginloader.h>
 
+#include <qsettings.h>
+
+#include <memory>
 
 /**
  * @brief The DroneCANAdapter class provides a device-agnostic interface to the CAN bus.
@@ -45,15 +48,41 @@ public:
     DroneCANInterface(QObject *parent = nullptr);
     virtual ~DroneCANInterface();
 
+    // TODO - Make this a shared pointer?
+    QCanBusDevice* getAdapter(void);
+
     static QStringList GetPlugins();
     static QStringList GetDevices(const QString pluginName, QString *errorMsg = nullptr);
+
+    bool open(QString pluginName = QString(), QString interfaceName = QString());
+    bool close(void);
+
+    bool isOpen(void);
+
+    void resetCounters(void);
+
+    void loadSettings(QSettings &settings);
+    void saveSettings(QSettings &settings);
 
 public slots:
     virtual void run() override;
     void stop();
 
+    void startLogging(void);
+    void stopLogging(void);
+
 protected:
     bool running = false;
+
+    QString lastError;
+
+    QCanBusDevice *adapter = nullptr;
+
+    QString adapterName;
+    QString deviceName;
+
+    uint64_t rxCount = 0;
+    uint64_t txCount = 0;
 };
 
 
