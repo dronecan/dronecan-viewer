@@ -45,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setDockNestingEnabled(true);
 
+    initCANInterface();
+
     initMenus();
     initWidgets();
     initSignalsSlots();
@@ -65,6 +67,10 @@ MainWindow::~MainWindow()
 
     // Save the workpace settings
     saveWorkspaceSettings(DroneCAN::Directory::defaultWorkspaceFile());
+
+    // Stop the CAN interface
+    canInterface->stop();
+    canInterface->wait();
 
     delete ui;
 }
@@ -101,6 +107,16 @@ void MainWindow::initTimers()
     widgetUpdateTimer = new QTimer(this);
     connect(widgetUpdateTimer, SIGNAL(timeout()), this, SLOT(updateWidgets()));
     widgetUpdateTimer->start(250);
+}
+
+
+void MainWindow::initCANInterface()
+{
+    canInterface = new DroneCANInterface(this);
+
+    canInterface->start();
+
+    DCDebug << "initCANInterface complete";
 }
 
 

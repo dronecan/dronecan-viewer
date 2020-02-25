@@ -28,25 +28,34 @@ SOFTWARE.
 
 DroneCANInterface::DroneCANInterface(QObject *parent) : QThread(parent)
 {
-
+    DCDebug << "DroneCANInterface created";
 }
 
 
 DroneCANInterface::~DroneCANInterface()
 {
-
+    DCDebug << "DroneCANInterface destroyed";
 }
 
 
 void DroneCANInterface::run()
 {
-    // TODO
+    running = true;
+
+    DCDebug << "DroneCANInterface starting";
+
+    while (running)
+    {
+        msleep(1000);
+    }
+
+    DCDebug << "DroneCANInterface complete";
 }
 
 
 void DroneCANInterface::stop()
 {
-    // TODO
+    running = false;
 }
 
 

@@ -64,6 +64,7 @@ protected:
     void initSignalsSlots();
     void initWidgets();
     void initTimers();
+    void initCANInterface();
 
     bool loadWorkspaceSettings(QString filename = QString());
     bool saveWorkspaceSettings(QString filename = QString());
@@ -75,7 +76,9 @@ protected:
 
     QList<DockManager*> dockedWidgets;
 
-    QTimer *widgetUpdateTimer;
+    QTimer *widgetUpdateTimer = nullptr;
+
+    DroneCANInterface* canInterface = nullptr;
 };
 
 #endif // MAINWINDOW_H

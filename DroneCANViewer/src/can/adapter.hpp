@@ -51,6 +51,9 @@ public:
 public slots:
     virtual void run() override;
     void stop();
+
+protected:
+    bool running = false;
 };
 
 
