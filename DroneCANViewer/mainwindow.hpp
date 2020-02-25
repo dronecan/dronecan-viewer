@@ -66,8 +66,15 @@ protected:
     void initTimers();
     void initCANInterface();
 
+    void saveBuildInfo(QSettings &settings);
+
+    //! Settings particular to a particular workspace layout
     bool loadWorkspaceSettings(QString filename = QString());
     bool saveWorkspaceSettings(QString filename = QString());
+
+    //! Global settings (independent of workspace)
+    void loadGlobalSettings(void);
+    void saveGlobalSettings(void);
 
     bool addDockedWidget(DockManager *mgr, QAction *action = nullptr);
     bool addDockedWidget(QWidget *widget, QAction *action = nullptr);

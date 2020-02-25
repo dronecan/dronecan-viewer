@@ -68,6 +68,12 @@ QString defaultWorkspaceFile()
 }
 
 
+QString globalSettingsFile()
+{
+    return localPath() + "dronecan.ini";
+}
+
+
 QString logDirectory()
 {
     return localPath() + "log" + QDir::separator();

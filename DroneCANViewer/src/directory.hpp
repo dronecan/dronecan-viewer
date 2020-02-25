@@ -38,6 +38,7 @@ namespace DroneCAN::Directory
     // Workspace directory / files
     QString workspaceDirectory();
     QString defaultWorkspaceFile();
+    QString globalSettingsFile();
 
     QString logDirectory();
 

@@ -32,6 +32,9 @@ SOFTWARE.
 #include "adapter.hpp"
 #include "directory.hpp"
 
+#include "version.hpp"
+#include "build_info.hpp"
+
 #include "about_widget.hpp"
 #include "can_monitor_widget.hpp"
 #include "device_list_widget.hpp"
@@ -54,6 +57,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle(tr("DroneCAN Viewer"));
 
+    // Load global settings
+    loadGlobalSettings();
+
     // Attempt to load workspace settings
     loadWorkspaceSettings(DroneCAN::Directory::defaultWorkspaceFile());
 
@@ -67,6 +73,9 @@ MainWindow::~MainWindow()
 
     // Save the workpace settings
     saveWorkspaceSettings(DroneCAN::Directory::defaultWorkspaceFile());
+
+    // Save global settings file
+    saveGlobalSettings();
 
     // Stop the CAN interface
     canInterface->stop();
@@ -218,6 +227,22 @@ bool MainWindow::loadWorkspaceSettings(QString filename)
 }
 
 
+/**
+ * @brief MainWindow::saveBuildInfo - Encode application version to a settings file
+ * @param settings
+ */
+void MainWindow::saveBuildInfo(QSettings &settings)
+{
+    settings.beginGroup("application");
+
+    settings.setValue("version", DroneCAN::Version::version);
+
+    settings.setValue("commit", DCV_BUILD_COMMIT_HASH);
+
+    settings.endGroup();
+}
+
+
 void MainWindow::saveWorkspace()
 {
     saveWorkspaceSettings();
@@ -248,9 +273,7 @@ bool MainWindow::saveWorkspaceSettings(QString filename)
 
     workspace.clear();
 
-    workspace.beginGroup("application");
-    // TODO - Set application version, etc
-    workspace.endGroup(); // "application"
+    saveBuildInfo(workspace);
 
     workspace.beginGroup("workspace");
 
@@ -272,6 +295,32 @@ bool MainWindow::saveWorkspaceSettings(QString filename)
     workspace.endGroup(); // "windows"
 
     return true;
+}
+
+
+void MainWindow::loadGlobalSettings()
+{
+    QSettings settings(DroneCAN::Directory::globalSettingsFile(), QSettings::IniFormat);
+
+    if (canInterface)
+    {
+        canInterface->loadSettings(settings);
+    }
+}
+
+
+void MainWindow::saveGlobalSettings()
+{
+    QSettings settings(DroneCAN::Directory::globalSettingsFile(), QSettings::IniFormat);
+
+    settings.clear();
+
+    saveBuildInfo(settings);
+
+    if (canInterface)
+    {
+        canInterface->saveSettings(settings);
+    }
 }
 
 
