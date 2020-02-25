@@ -63,6 +63,13 @@ int main(int argc, char *argv[])
         DroneCAN::setDebugLevel(dbgValue);
     }
 
+    // Add the local plugins directory to the search path
+    QString pluginsDir = a.applicationDirPath() + "/plugins/";
+
+    QCoreApplication::addLibraryPath(pluginsDir);
+
+    DCDebug << "Starting DroneCANViewer in" << a.applicationDirPath();
+
     MainWindow w;
 
     w.show();
