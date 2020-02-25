@@ -12,7 +12,7 @@ TARGET = DroneCANViewer
 TEMPLATE = app
 
 # Automatically generate version information on each build
-system(python script/build_version.py --prefix DCV --output src/build_info.hpp)
+system(python3 script/build_version.py --prefix DCV --output src/build_info.hpp)
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
