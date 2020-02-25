@@ -37,6 +37,18 @@ DroneCANDevice::DroneCANDevice()
 }
 
 
+DroneCANDevice::DroneCANDevice(uint16_t vid, uint16_t pid, uint32_t sn)
+{
+    initialize();
+
+    id.vid = vid;
+    id.pid = pid;
+    id.serial = sn;
+
+    DCDebug << "Creating new DroneCAN device";
+}
+
+
 DroneCANDevice::~DroneCANDevice()
 {
     DCDebug << "Deleting DroneCAN device";

@@ -35,6 +35,7 @@ class DroneCANDevice
 {
 public:
     DroneCANDevice();
+    DroneCANDevice(uint16_t vid, uint16_t pid, uint32_t sn);
     virtual ~DroneCANDevice();
 
     QString getManufacturerString(void) const;
@@ -54,10 +55,7 @@ protected:
     // Device system information
     DroneCAN_UniqueId_t id;
 
-    // Device identifier strings
-    char manufacturerString[64];
-    char userString[64];
-
+    // Device manufacturer strings
     struct
     {
         //! Manufacturer string
@@ -67,6 +65,7 @@ protected:
         char user[64];
     } strings;
 
+    // Device firmware information
     struct
     {
         DroneCAN_FirmwareDate_t date;
@@ -75,6 +74,10 @@ protected:
     } firmware;
 
     // Device hardware information
+    struct
+    {
+
+    } hardware;
 
     void initialize();
 };
