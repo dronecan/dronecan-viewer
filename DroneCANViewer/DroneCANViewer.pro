@@ -31,12 +31,16 @@ INCLUDEPATH += \
         src/ \
         src/can/ \
         src/widget/ \
+        ../../dronecanc/inc \
+        ../../droncanc/src/ \
         ui_tmp/
 
 SOURCES += \
+        ../../dronecanc/src/dronecan_id.c \
         main.cpp \
         mainwindow.cpp \
         src/can/adapter.cpp \
+        src/can/dronecan_transfer.cpp \
         src/debug.cpp \
         src/directory.cpp \
         src/widget/about_widget.cpp \
@@ -45,9 +49,12 @@ SOURCES += \
         src/widget/device_list_widget.cpp
 
 HEADERS += \
+        ../../dronecanc/inc/dronecan_id.h \
+        ../../dronecanc/inc/dronecan_transfer.h \
         mainwindow.hpp \
         src/build_info.hpp \
         src/can/adapter.hpp \
+        src/can/dronecan_transfer.hpp \
         src/debug.hpp \
         src/directory.hpp \
         src/version.hpp \
