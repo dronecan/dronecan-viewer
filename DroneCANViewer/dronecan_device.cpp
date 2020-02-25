@@ -106,3 +106,40 @@ QString DroneCANDevice::getVendorDescription() const
 
     return s;
 }
+
+
+QString DroneCANDevice::getFirmwareVersionString() const
+{
+    QStringList v;
+
+    v << QString::number(firmware.version.versionMajor);
+    v << QString::number(firmware.version.versionMinor);
+    v << QString::number(firmware.version.versionSub);
+
+    return v.join(".");
+}
+
+
+DroneCAN_Parameter_t DroneCANDevice::getParameter(int index)
+{
+    if (parameters.contains(index))
+    {
+        return parameters[index];
+    }
+
+    // Not found - return a null parameter
+
+    DroneCAN_Parameter_t param;
+
+    memset(&param, 0, sizeof(param));
+
+    param.format = DRONECAN_PARAMETER_NULL;
+
+    return param;
+}
+
+
+void DroneCANDevice::setParameter(int index, DroneCAN_Parameter_t param)
+{
+    parameters[index] = param;
+}

@@ -66,6 +66,7 @@ HEADERS += \
         ../protocol/src/fieldencode.h \
         ../protocol/src/scaleddecode.h \
         ../protocol/src/scaledencode.h \
+        ../protocol/static/dronecan_param.h \
         dronecan_device.hpp \
         mainwindow.hpp \
         src/build_info.hpp \

@@ -27,9 +27,13 @@ SOFTWARE.
 #define DRONECAN_DEVICE_HPP
 
 #include <qstring.h>
+#include <qmap.h>
 
 #include "DroneCANProtocol.h"
 #include "dronecan_system_packets.h"
+
+#include "dronecan_id.h"
+#include "dronecan_param.h"
 
 class DroneCANDevice
 {
@@ -49,6 +53,12 @@ public:
 
     QString getVendorString(void) const;
     QString getVendorDescription(void) const;
+
+    QString getFirmwareVersionString(void) const;
+
+    DroneCAN_Parameter_t getParameter(int index);
+    void setParameter(int index, DroneCAN_Parameter_t param);
+    int getParameterCount(void) { return parameters.count(); }
 
 protected:
 
@@ -80,6 +90,9 @@ protected:
     } hardware;
 
     void initialize();
+
+    // Map of public parameters available for this device
+    QMap<int, DroneCAN_Parameter_t> parameters;
 };
 
 #endif // DRONECAN_DEVICE_HPP
