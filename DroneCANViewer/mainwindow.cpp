@@ -35,6 +35,7 @@ SOFTWARE.
 #include "version.hpp"
 #include "build_info.hpp"
 
+#include "can_connect_widget.hpp"
 #include "about_widget.hpp"
 #include "can_monitor_widget.hpp"
 #include "device_list_widget.hpp"
@@ -124,8 +125,6 @@ void MainWindow::initCANInterface()
     canInterface = new DroneCANInterface(this);
 
     canInterface->start();
-
-    DCDebug << "initCANInterface complete";
 }
 
 
@@ -137,6 +136,8 @@ void MainWindow::initSignalsSlots()
     connect(ui->actionE_xit, SIGNAL(triggered()), this, SLOT(onClose()));
 
     connect(ui->action_About, SIGNAL(triggered()), this, SLOT(showAboutInfo()));
+
+    connect(ui->action_Connect, SIGNAL(triggered()), this, SLOT(connectCAN()));
 
     connect(ui->action_Load_Workspace, SIGNAL(triggered()), this, SLOT(loadWorkspace()));
     connect(ui->action_Save_Workspace, SIGNAL(triggered()), this, SLOT(saveWorkspace()));
@@ -153,6 +154,31 @@ void MainWindow::showAboutInfo()
     about->setWindowModality(Qt::ApplicationModal);
 
     about->exec();
+}
+
+
+void MainWindow::connectCAN()
+{
+    if (!canInterface) return;
+
+    if (!canInterface->isOpen())
+    {
+        CANConnectDialog dlg(this);
+
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            QString driver = dlg.getDriverName();
+            QString device = dlg.getDeviceName();
+
+            bool result = canInterface->open(driver, device);
+
+            // TODO - Do something with the result here - display an error message?
+        }
+    }
+    else
+    {
+        canInterface->close();
+    }
 }
 
 

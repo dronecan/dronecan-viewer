@@ -54,6 +54,8 @@ public slots:
 
     void showAboutInfo();
 
+    void connectCAN();
+
 protected slots:
     void updateWidgets();
 
