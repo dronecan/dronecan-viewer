@@ -25,6 +25,7 @@ SOFTWARE.
 #include "about_widget.hpp"
 #include "build_info.hpp"
 #include "version.hpp"
+#include "DroneCANProtocol.h"
 
 
 AboutWidget::AboutWidget(QWidget *parent) : QDialog(parent)
@@ -45,6 +46,9 @@ AboutWidget::AboutWidget(QWidget *parent) : QDialog(parent)
     ui.commitHash->setText(DCV_BUILD_COMMIT_HASH);
 
     ui.version->setText(DroneCAN::Version::version);
+
+    ui.qtVersion->setText(qVersion());
+    ui.protocolVersion->setText(getDroneCANVersion());
 
     // Set the URL links
     ui.githubLabel->setTextFormat(Qt::RichText);
