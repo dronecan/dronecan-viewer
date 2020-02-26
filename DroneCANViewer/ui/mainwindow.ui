@@ -36,6 +36,7 @@
     <property name="title">
      <string>&amp;CAN</string>
     </property>
+    <addaction name="action_Connect"/>
     <addaction name="action_canviewer"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
@@ -92,6 +93,11 @@
   <action name="actionDevice_List">
    <property name="text">
     <string>Device &amp;List</string>
+   </property>
+  </action>
+  <action name="action_Connect">
+   <property name="text">
+    <string>&amp;Connect</string>
    </property>
   </action>
  </widget>

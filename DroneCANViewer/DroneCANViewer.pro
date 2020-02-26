@@ -53,6 +53,7 @@ SOURCES += \
         src/debug.cpp \
         src/directory.cpp \
         src/widget/about_widget.cpp \
+        src/widget/can_connect_widget.cpp \
         src/widget/can_monitor_widget.cpp \
         src/widget/dc_widget.cpp \
         src/widget/device_list_widget.cpp
@@ -77,11 +78,13 @@ HEADERS += \
         src/directory.hpp \
         src/version.hpp \
         src/widget/about_widget.hpp \
+        src/widget/can_connect_widget.hpp \
         src/widget/can_monitor_widget.hpp \
         src/widget/dc_widget.hpp \
         src/widget/device_list_widget.hpp
 
 FORMS += \
+        ui/can_connect.ui \
         ui/can_viewer.ui \
         ui/device_list.ui \
         ui/mainwindow.ui \

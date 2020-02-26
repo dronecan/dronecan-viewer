@@ -22,26 +22,34 @@ SOFTWARE.
 
 **/
 
-#ifndef DIRECTORY_HPP
-#define DIRECTORY_HPP
+#ifndef CAN_CONNECT_WIDGET_HPP
+#define CAN_CONNECT_WIDGET_HPP
 
-#include <qstring.h>
+#include "ui_can_connect.h"
 
-namespace DroneCAN::Directory
+#include <qdialog.h>
+
+class CANConnectDialog : public QDialog
 {
+    Q_OBJECT
 
-    QString escapePath(QString path);
+public:
+    CANConnectDialog(QWidget *parent = nullptr);
 
-    // Functions for accessing various application directories
-    QString localPath();
+    QString getDriverName(void);
+    QString getDeviceName(void);
 
-    // Workspace directory / files
-    QString workspaceDirectory();
-    QString defaultWorkspaceFile();
-    QString globalSettingsFile();
+public slots:
+    void refreshDrivers();
+    void updateConnectButton();
 
-    QString logDirectory();
+    void driverSelected(int idx);
 
-}
+protected:
+    Ui::CanConnectForm ui;
 
-#endif // DIRECTORY_HPP
+    QStringList devices;
+};
+
+
+#endif // CAN_CONNECT_WIDGET_HPP

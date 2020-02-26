@@ -32,6 +32,10 @@ SOFTWARE.
 #include "adapter.hpp"
 #include "directory.hpp"
 
+#include "version.hpp"
+#include "build_info.hpp"
+
+#include "can_connect_widget.hpp"
 #include "about_widget.hpp"
 #include "can_monitor_widget.hpp"
 #include "device_list_widget.hpp"
@@ -45,12 +49,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setDockNestingEnabled(true);
 
+    initCANInterface();
+
     initMenus();
     initWidgets();
     initSignalsSlots();
     initTimers();
 
     setWindowTitle(tr("DroneCAN Viewer"));
+
+    // Load global settings
+    loadGlobalSettings();
 
     // Attempt to load workspace settings
     loadWorkspaceSettings(DroneCAN::Directory::defaultWorkspaceFile());
@@ -65,6 +74,13 @@ MainWindow::~MainWindow()
 
     // Save the workpace settings
     saveWorkspaceSettings(DroneCAN::Directory::defaultWorkspaceFile());
+
+    // Save global settings file
+    saveGlobalSettings();
+
+    // Stop the CAN interface
+    canInterface->stop();
+    canInterface->wait();
 
     delete ui;
 }
@@ -104,6 +120,14 @@ void MainWindow::initTimers()
 }
 
 
+void MainWindow::initCANInterface()
+{
+    canInterface = new DroneCANInterface(this);
+
+    canInterface->start();
+}
+
+
 /**
  * @brief MainWindow::initSignalsSlots - Initialize and connect various signals / slots
  */
@@ -112,6 +136,8 @@ void MainWindow::initSignalsSlots()
     connect(ui->actionE_xit, SIGNAL(triggered()), this, SLOT(onClose()));
 
     connect(ui->action_About, SIGNAL(triggered()), this, SLOT(showAboutInfo()));
+
+    connect(ui->action_Connect, SIGNAL(triggered()), this, SLOT(connectCAN()));
 
     connect(ui->action_Load_Workspace, SIGNAL(triggered()), this, SLOT(loadWorkspace()));
     connect(ui->action_Save_Workspace, SIGNAL(triggered()), this, SLOT(saveWorkspace()));
@@ -128,6 +154,31 @@ void MainWindow::showAboutInfo()
     about->setWindowModality(Qt::ApplicationModal);
 
     about->exec();
+}
+
+
+void MainWindow::connectCAN()
+{
+    if (!canInterface) return;
+
+    if (!canInterface->isOpen())
+    {
+        CANConnectDialog dlg(this);
+
+        if (dlg.exec() == QDialog::Accepted)
+        {
+            QString driver = dlg.getDriverName();
+            QString device = dlg.getDeviceName();
+
+            bool result = canInterface->open(driver, device);
+
+            // TODO - Do something with the result here - display an error message?
+        }
+    }
+    else
+    {
+        canInterface->close();
+    }
 }
 
 
@@ -202,6 +253,22 @@ bool MainWindow::loadWorkspaceSettings(QString filename)
 }
 
 
+/**
+ * @brief MainWindow::saveBuildInfo - Encode application version to a settings file
+ * @param settings
+ */
+void MainWindow::saveBuildInfo(QSettings &settings)
+{
+    settings.beginGroup("application");
+
+    settings.setValue("version", DroneCAN::Version::version);
+
+    settings.setValue("commit", DCV_BUILD_COMMIT_HASH);
+
+    settings.endGroup();
+}
+
+
 void MainWindow::saveWorkspace()
 {
     saveWorkspaceSettings();
@@ -232,9 +299,7 @@ bool MainWindow::saveWorkspaceSettings(QString filename)
 
     workspace.clear();
 
-    workspace.beginGroup("application");
-    // TODO - Set application version, etc
-    workspace.endGroup(); // "application"
+    saveBuildInfo(workspace);
 
     workspace.beginGroup("workspace");
 
@@ -256,6 +321,32 @@ bool MainWindow::saveWorkspaceSettings(QString filename)
     workspace.endGroup(); // "windows"
 
     return true;
+}
+
+
+void MainWindow::loadGlobalSettings()
+{
+    QSettings settings(DroneCAN::Directory::globalSettingsFile(), QSettings::IniFormat);
+
+    if (canInterface)
+    {
+        canInterface->loadSettings(settings);
+    }
+}
+
+
+void MainWindow::saveGlobalSettings()
+{
+    QSettings settings(DroneCAN::Directory::globalSettingsFile(), QSettings::IniFormat);
+
+    settings.clear();
+
+    saveBuildInfo(settings);
+
+    if (canInterface)
+    {
+        canInterface->saveSettings(settings);
+    }
 }
 
 
