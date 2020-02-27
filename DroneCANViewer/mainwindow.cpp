@@ -115,7 +115,7 @@ void MainWindow::initTimers()
 {
     // 4Hz generic update for all widgets
     widgetUpdateTimer = new QTimer(this);
-    connect(widgetUpdateTimer, SIGNAL(timeout()), this, SLOT(updateWidgets()));
+    connect(widgetUpdateTimer, SIGNAL(timeout()), this, SLOT(updateDisplay()));
     widgetUpdateTimer->start(250);
 }
 
@@ -417,6 +417,26 @@ bool MainWindow::removeDockedWidget(QString title)
     }
 
     return false;
+}
+
+
+void MainWindow::updateDisplay()
+{
+    // Update the window title
+    QString title = "DroneCAN - " + canInterface->connectionString();
+
+    setWindowTitle(title);
+
+    if (canInterface->isOpen())
+    {
+        ui->action_Connect->setText(tr("Disconnect"));
+    }
+    else
+    {
+        ui->action_Connect->setText(tr("Connect"));
+    }
+
+    updateWidgets();
 }
 
 

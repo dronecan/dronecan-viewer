@@ -57,6 +57,7 @@ public slots:
     void connectCAN();
 
 protected slots:
+    void updateDisplay();
     void updateWidgets();
 
 protected:
