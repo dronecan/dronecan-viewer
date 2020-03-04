@@ -26,6 +26,7 @@ SOFTWARE.
 
 #include <qcanbus.h>
 #include "adapter.hpp"
+#include "debug.hpp"
 
 
 CANConnectDialog::CANConnectDialog(QWidget *parent) : QDialog(parent)
@@ -75,6 +76,8 @@ void CANConnectDialog::refreshDrivers()
     for (QString plugin : plugins)
     {
         ui.driverSelect->addItem(plugin);
+
+        DCDebug << "Discovered CAN plugin -" << plugin;
     }
 
     updateConnectButton();
