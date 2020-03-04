@@ -29,8 +29,10 @@ SOFTWARE.
 #ifndef MSG_BOX_HPP
 #define MSG_BOX_HPP
 
+#include <stdbool.h>
 #include <qwidget.h>
 
 void InfoBox(QString title, QString message, QWidget *parent = nullptr);
+bool QuestionBox(QString title, QString message, QWidget *parent = nullptr);
 
 #endif // MSG_BOX_HPP

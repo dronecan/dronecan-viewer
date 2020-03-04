@@ -28,6 +28,12 @@ SOFTWARE.
 #include "msg_box.hpp"
 
 
+/**
+ * @brief InfoBox - Display a simple information box
+ * @param title - Window title
+ * @param message - Explanatory text
+ * @param parent - parent object
+ */
 void InfoBox(QString title, QString message, QWidget *parent)
 {
     QMessageBox box(parent);
@@ -38,4 +44,24 @@ void InfoBox(QString title, QString message, QWidget *parent)
     box.setStandardButtons(QMessageBox::StandardButton::Ok);
 
     box.exec();
+}
+
+
+/**
+ * @brief QuestionBox - Present a simple question box to the user
+ * @param title - Window title
+ * @param message - Explanatory text
+ * @param parent - parent object
+ * @return - true if the "OK" button was pressed
+ */
+bool QuestionBox(QString title, QString message, QWidget *parent)
+{
+    QMessageBox box(parent);
+
+    box.setWindowTitle(title);
+    box.setText(message);
+
+    box.setStandardButtons(QMessageBox::StandardButton::Ok | QMessageBox::StandardButton::Cancel);
+
+    return box.exec() == QMessageBox::Ok;
 }
