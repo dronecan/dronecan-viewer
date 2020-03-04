@@ -59,6 +59,8 @@ public:
     bool close(void);
     bool isOpen(void);
 
+    QString getErrorString(void) const { return lastError; }
+
     QString connectionString(void);
 
     void resetCounters(void);

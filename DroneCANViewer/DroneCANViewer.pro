@@ -31,6 +31,7 @@ INCLUDEPATH += \
         src/ \
         src/can/ \
         src/widget/ \
+        src/helpers/ \
         ../protocol/src/ \
         ../protocol/static/ \
         ui_tmp/
@@ -52,6 +53,7 @@ SOURCES += \
         src/can/dronecan_transfer.cpp \
         src/debug.cpp \
         src/directory.cpp \
+        src/helpers/msg_box.cpp \
         src/widget/about_widget.cpp \
         src/widget/can_connect_widget.cpp \
         src/widget/can_monitor_widget.cpp \
@@ -76,6 +78,7 @@ HEADERS += \
         src/can/dronecan_transfer.hpp \
         src/debug.hpp \
         src/directory.hpp \
+        src/helpers/msg_box.hpp \
         src/version.hpp \
         src/widget/about_widget.hpp \
         src/widget/can_connect_widget.hpp \

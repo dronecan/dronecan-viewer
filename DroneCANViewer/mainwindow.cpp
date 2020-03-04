@@ -35,6 +35,8 @@ SOFTWARE.
 #include "version.hpp"
 #include "build_info.hpp"
 
+
+#include "msg_box.hpp"
 #include "can_connect_widget.hpp"
 #include "about_widget.hpp"
 #include "can_monitor_widget.hpp"
@@ -172,7 +174,19 @@ void MainWindow::connectCAN()
 
             bool result = canInterface->open(driver, device);
 
-            // TODO - Do something with the result here - display an error message?
+            if (result)
+            {
+
+            }
+            else
+            {
+                QString title = tr("Connection Error");
+                QString msg = tr("Error connecting to CAN device") + QString(":\n");
+
+                msg += canInterface->getErrorString();
+
+                InfoBox(title, msg, this);
+            }
         }
     }
     else

@@ -74,13 +74,7 @@ void CANConnectDialog::refreshDrivers()
 
     for (QString plugin : plugins)
     {
-        auto devices = DroneCANInterface::GetDevices(plugin);
-
-        // Only add the driver if devices are available
-        if (!devices.isEmpty())
-        {
-            ui.driverSelect->addItem(plugin);
-        }
+        ui.driverSelect->addItem(plugin);
     }
 
     updateConnectButton();
