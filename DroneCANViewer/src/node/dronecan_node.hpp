@@ -32,15 +32,16 @@ SOFTWARE.
 #include "DroneCANProtocol.h"
 #include "dronecan_system_packets.h"
 
+#include "dronecan_packet.hpp"
 #include "dronecan_id.h"
 #include "dronecan_param.h"
 
-class DroneCANDevice
+class DroneCANNode
 {
 public:
-    DroneCANDevice();
-    DroneCANDevice(uint16_t vid, uint16_t pid, uint32_t sn);
-    virtual ~DroneCANDevice();
+    DroneCANNode();
+    DroneCANNode(uint16_t vid, uint16_t pid, uint32_t sn);
+    virtual ~DroneCANNode();
 
     QString getManufacturerString(void) const;
     QString getUserString(void) const;
@@ -59,6 +60,8 @@ public:
     DroneCAN_Parameter_t getParameter(int index);
     void setParameter(int index, DroneCAN_Parameter_t param);
     int getParameterCount(void) { return parameters.count(); }
+
+    bool decodePacket(DroneCANPacket &packet);
 
 protected:
 

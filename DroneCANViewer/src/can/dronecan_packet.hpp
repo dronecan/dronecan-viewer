@@ -33,6 +33,7 @@ class DroneCANPacket
 public:
     DroneCANPacket();
 
+    // TODO - No magic numbers
     uint8_t data[384];
 
     uint16_t id = 0;
