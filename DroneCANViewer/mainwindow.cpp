@@ -35,6 +35,8 @@ SOFTWARE.
 #include "version.hpp"
 #include "build_info.hpp"
 
+
+#include "msg_box.hpp"
 #include "can_connect_widget.hpp"
 #include "about_widget.hpp"
 #include "can_monitor_widget.hpp"
@@ -45,13 +47,18 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    DCDebug << "Initialising MainWindow()";
+
     ui->setupUi(this);
 
     setDockNestingEnabled(true);
 
     initCANInterface();
 
+    // Perform initial UI configuration
     initMenus();
+    initStatusBar();
+    initToolBars();
     initWidgets();
     initSignalsSlots();
     initTimers();
@@ -95,7 +102,7 @@ void MainWindow::onClose()
 
 
 /**
- * @brief MainWindow::initMenus - Initialize menubar and menu items
+ * @brief MainWindow::initMenus - Initialise menubar and menu items
  */
 void MainWindow::initMenus()
 {
@@ -103,6 +110,27 @@ void MainWindow::initMenus()
 }
 
 
+/**
+ * @brief MainWindow::initStatusBar - Initialise the status bar widget
+ */
+void MainWindow::initStatusBar()
+{
+    // TODO
+}
+
+
+/**
+ * @brief MainWindow::initToolBars - Initialise application tool bars
+ */
+void MainWindow::initToolBars()
+{
+    // TODO
+}
+
+
+/**
+ * @brief MainWindow::initWidgets
+ */
 void MainWindow::initWidgets()
 {
     addDockedWidget(new CANMonitorWidget(this), ui->action_canviewer);
@@ -111,15 +139,21 @@ void MainWindow::initWidgets()
 }
 
 
+/**
+ * @brief MainWindow::initTimers - Initialise various background timers
+ */
 void MainWindow::initTimers()
 {
     // 4Hz generic update for all widgets
     widgetUpdateTimer = new QTimer(this);
-    connect(widgetUpdateTimer, SIGNAL(timeout()), this, SLOT(updateWidgets()));
+    connect(widgetUpdateTimer, SIGNAL(timeout()), this, SLOT(updateDisplay()));
     widgetUpdateTimer->start(250);
 }
 
 
+/**
+ * @brief MainWindow::initCANInterface - Initialise CAN interface manager thread
+ */
 void MainWindow::initCANInterface()
 {
     canInterface = new DroneCANInterface(this);
@@ -157,13 +191,18 @@ void MainWindow::showAboutInfo()
 }
 
 
+/**
+ * @brief MainWindow::connectCAN - Attempt to connect to a CAN interface
+ *
+ * Displays a connection dialog where user can select from available interfaces.
+ */
 void MainWindow::connectCAN()
 {
     if (!canInterface) return;
 
     if (!canInterface->isOpen())
     {
-        CANConnectDialog dlg(this);
+        CANConnectDialog dlg(canInterface->getLatestPlugin(), this);
 
         if (dlg.exec() == QDialog::Accepted)
         {
@@ -172,7 +211,19 @@ void MainWindow::connectCAN()
 
             bool result = canInterface->open(driver, device);
 
-            // TODO - Do something with the result here - display an error message?
+            if (result)
+            {
+
+            }
+            else
+            {
+                QString title = tr("Connection Error");
+                QString msg = tr("Error connecting to CAN device") + QString(":\n");
+
+                msg += canInterface->getErrorString();
+
+                InfoBox(title, msg, this);
+            }
         }
     }
     else
@@ -417,6 +468,34 @@ bool MainWindow::removeDockedWidget(QString title)
     }
 
     return false;
+}
+
+
+void MainWindow::updateDisplay()
+{
+    // Update the window title
+    QString title = canInterface->connectionString();
+
+    setWindowTitle(title);
+
+    // Update CAN connection window
+    if (canInterface->isOpen())
+    {
+        ui->action_Connect->setText(tr("Disconnect"));
+    }
+    else
+    {
+        ui->action_Connect->setText(tr("Connect"));
+    }
+
+    updateStatusBar();
+    updateWidgets();
+}
+
+
+void MainWindow::updateStatusBar()
+{
+    // TODO - Update the message in the status bar
 }
 
 

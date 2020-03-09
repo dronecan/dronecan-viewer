@@ -59,6 +59,8 @@ public:
     bool close(void);
     bool isOpen(void);
 
+    QString getErrorString(void) const { return lastError; }
+
     QString connectionString(void);
 
     void resetCounters(void);
@@ -68,6 +70,8 @@ public:
 
     uint64_t getRxCount(void) const { return rxCount; }
     uint64_t getTxCount(void) const { return txCount; }
+
+    QString getLatestPlugin(void) const { return lastPlugin; }
 
 public slots:
     virtual void run() override;
@@ -92,6 +96,8 @@ protected:
 
     QCanBusDevice *adapter = nullptr;
 
+    //! Most recent selected CAN plugin
+    QString lastPlugin;
 
     QString adapterName;
     QString deviceName;

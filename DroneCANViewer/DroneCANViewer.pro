@@ -31,11 +31,14 @@ INCLUDEPATH += \
         src/ \
         src/can/ \
         src/widget/ \
+        src/helpers/ \
+        src/node/ \
         ../protocol/src/ \
         ../protocol/static/ \
         ui_tmp/
 
 SOURCES += \
+        ../protocol/src/dronecan_parameter_packets.c \
         ../protocol/static/dronecan_id.c \
         ../protocol/src/DroneCANProtocol.c \
         ../protocol/src/dronecan_packets.c \
@@ -44,7 +47,7 @@ SOURCES += \
         ../protocol/src/fieldencode.c \
         ../protocol/src/scaleddecode.c \
         ../protocol/src/scaledencode.c \
-        dronecan_device.cpp \
+        src/node/dronecan_node.cpp \
         main.cpp \
         mainwindow.cpp \
         src/can/adapter.cpp \
@@ -52,6 +55,8 @@ SOURCES += \
         src/can/dronecan_transfer.cpp \
         src/debug.cpp \
         src/directory.cpp \
+        src/helpers/msg_box.cpp \
+        src/node/node_decode.cpp \
         src/widget/about_widget.cpp \
         src/widget/can_connect_widget.cpp \
         src/widget/can_monitor_widget.cpp \
@@ -59,6 +64,7 @@ SOURCES += \
         src/widget/device_list_widget.cpp
 
 HEADERS += \
+        ../protocol/src/dronecan_parameter_packets.h \
         ../protocol/static/dronecan_id.h \
         ../protocol/src/DroneCANProtocol.h \
         ../protocol/src/dronecan_packets.h \
@@ -68,7 +74,7 @@ HEADERS += \
         ../protocol/src/scaleddecode.h \
         ../protocol/src/scaledencode.h \
         ../protocol/static/dronecan_param.h \
-        dronecan_device.hpp \
+        src/node/dronecan_node.hpp \
         mainwindow.hpp \
         src/build_info.hpp \
         src/can/adapter.hpp \
@@ -76,6 +82,7 @@ HEADERS += \
         src/can/dronecan_transfer.hpp \
         src/debug.hpp \
         src/directory.hpp \
+        src/helpers/msg_box.hpp \
         src/version.hpp \
         src/widget/about_widget.hpp \
         src/widget/can_connect_widget.hpp \

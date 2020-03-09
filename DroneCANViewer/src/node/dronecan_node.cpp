@@ -24,12 +24,12 @@ SOFTWARE.
 
 #include <memory.h>
 
-#include "dronecan_device.hpp"
+#include "dronecan_node.hpp"
 
 #include "debug.hpp"
 
 
-DroneCANDevice::DroneCANDevice()
+DroneCANNode::DroneCANNode()
 {
     initialize();
 
@@ -37,7 +37,7 @@ DroneCANDevice::DroneCANDevice()
 }
 
 
-DroneCANDevice::DroneCANDevice(uint16_t vid, uint16_t pid, uint32_t sn)
+DroneCANNode::DroneCANNode(uint16_t vid, uint16_t pid, uint32_t sn)
 {
     initialize();
 
@@ -49,13 +49,13 @@ DroneCANDevice::DroneCANDevice(uint16_t vid, uint16_t pid, uint32_t sn)
 }
 
 
-DroneCANDevice::~DroneCANDevice()
+DroneCANNode::~DroneCANNode()
 {
     DCDebug << "Deleting DroneCAN device";
 }
 
 
-void DroneCANDevice::initialize()
+void DroneCANNode::initialize()
 {
     memset(&id, 0, sizeof(id));
     memset(&firmware, 0, sizeof(firmware));
@@ -64,23 +64,23 @@ void DroneCANDevice::initialize()
 
 
 
-QString DroneCANDevice::getManufacturerString() const
+QString DroneCANNode::getManufacturerString() const
 {
     return QString(QByteArray((const char*) strings.manf, 64));
 }
 
 
-QString DroneCANDevice::getUserString() const
+QString DroneCANNode::getUserString() const
 {
     return QString(QByteArray((const char*) strings.user, 64));
 }
 
 
 /**
- * @brief DroneCANDevice::getUID - Return a unique identifier for this device
+ * @brief DroneCANNode::getUID - Return a unique identifier for this device
  * @return
  */
-uint64_t DroneCANDevice::getUID() const
+uint64_t DroneCANNode::getUID() const
 {
     uint64_t uid = 0;
 
@@ -92,7 +92,7 @@ uint64_t DroneCANDevice::getUID() const
 }
 
 
-QString DroneCANDevice::getVendorString() const
+QString DroneCANNode::getVendorString() const
 {
     QString s = DroneCAN_Vendors_EnumLabel(id.vid);
 
@@ -100,7 +100,7 @@ QString DroneCANDevice::getVendorString() const
 }
 
 
-QString DroneCANDevice::getVendorDescription() const
+QString DroneCANNode::getVendorDescription() const
 {
     QString s = DroneCAN_Vendors_EnumTitle(id.vid);
 
@@ -108,7 +108,7 @@ QString DroneCANDevice::getVendorDescription() const
 }
 
 
-QString DroneCANDevice::getFirmwareVersionString() const
+QString DroneCANNode::getFirmwareVersionString() const
 {
     QStringList v;
 
@@ -120,7 +120,7 @@ QString DroneCANDevice::getFirmwareVersionString() const
 }
 
 
-DroneCAN_Parameter_t DroneCANDevice::getParameter(int index)
+DroneCAN_Parameter_t DroneCANNode::getParameter(int index)
 {
     if (parameters.contains(index))
     {
@@ -139,7 +139,7 @@ DroneCAN_Parameter_t DroneCANDevice::getParameter(int index)
 }
 
 
-void DroneCANDevice::setParameter(int index, DroneCAN_Parameter_t param)
+void DroneCANNode::setParameter(int index, DroneCAN_Parameter_t param)
 {
     parameters[index] = param;
 }

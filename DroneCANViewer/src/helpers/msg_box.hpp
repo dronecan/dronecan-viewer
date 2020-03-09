@@ -22,34 +22,17 @@ SOFTWARE.
 
 **/
 
-#ifndef CAN_CONNECT_WIDGET_HPP
-#define CAN_CONNECT_WIDGET_HPP
+/*
+ * This file contains helper functions for message / dialog boxes
+ */
 
-#include "ui_can_connect.h"
+#ifndef MSG_BOX_HPP
+#define MSG_BOX_HPP
 
-#include <qdialog.h>
+#include <stdbool.h>
+#include <qwidget.h>
 
-class CANConnectDialog : public QDialog
-{
-    Q_OBJECT
+void InfoBox(QString title, QString message, QWidget *parent = nullptr);
+bool QuestionBox(QString title, QString message, QWidget *parent = nullptr);
 
-public:
-    CANConnectDialog(QString pluginName, QWidget *parent = nullptr);
-
-    QString getDriverName(void);
-    QString getDeviceName(void);
-
-public slots:
-    void refreshDrivers();
-    void updateConnectButton();
-
-    void driverSelected(int idx);
-
-protected:
-    Ui::CanConnectForm ui;
-
-    QStringList devices;
-};
-
-
-#endif // CAN_CONNECT_WIDGET_HPP
+#endif // MSG_BOX_HPP

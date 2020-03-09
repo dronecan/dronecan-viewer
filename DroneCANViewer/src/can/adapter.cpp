@@ -36,6 +36,11 @@ DroneCANInterface::DroneCANInterface(QObject *parent) : QThread(parent)
 
 DroneCANInterface::~DroneCANInterface()
 {
+    if (adapter)
+    {
+        adapter->disconnectDevice();
+    }
+
     DCDebug << "DroneCANInterface destroyed";
 }
 
@@ -191,6 +196,8 @@ bool DroneCANInterface::open(QString pluginName, QString interfaceName)
         DCDebug << "Successfully opened CAN device -" << adapterName << ":" << deviceName;
 
         resetCounters();
+
+        lastPlugin = adapterName;
 
         return true;
     }
@@ -391,6 +398,8 @@ void DroneCANInterface::saveSettings(QSettings &settings)
 {
     settings.beginGroup("can");
 
+    settings.setValue("plugin", lastPlugin);
+
     settings.endGroup();
 }
 
@@ -402,6 +411,8 @@ void DroneCANInterface::saveSettings(QSettings &settings)
 void DroneCANInterface::loadSettings(QSettings &settings)
 {
     settings.beginGroup("can");
+
+    lastPlugin = settings.value("plugin", lastPlugin).toString();
 
     settings.endGroup();
 }

@@ -22,34 +22,46 @@ SOFTWARE.
 
 **/
 
-#ifndef CAN_CONNECT_WIDGET_HPP
-#define CAN_CONNECT_WIDGET_HPP
 
-#include "ui_can_connect.h"
+#include <qmessagebox.h>
 
-#include <qdialog.h>
+#include "msg_box.hpp"
 
-class CANConnectDialog : public QDialog
+
+/**
+ * @brief InfoBox - Display a simple information box
+ * @param title - Window title
+ * @param message - Explanatory text
+ * @param parent - parent object
+ */
+void InfoBox(QString title, QString message, QWidget *parent)
 {
-    Q_OBJECT
+    QMessageBox box(parent);
 
-public:
-    CANConnectDialog(QString pluginName, QWidget *parent = nullptr);
+    box.setWindowTitle(title);
+    box.setText(message);
 
-    QString getDriverName(void);
-    QString getDeviceName(void);
+    box.setStandardButtons(QMessageBox::StandardButton::Ok);
 
-public slots:
-    void refreshDrivers();
-    void updateConnectButton();
-
-    void driverSelected(int idx);
-
-protected:
-    Ui::CanConnectForm ui;
-
-    QStringList devices;
-};
+    box.exec();
+}
 
 
-#endif // CAN_CONNECT_WIDGET_HPP
+/**
+ * @brief QuestionBox - Present a simple question box to the user
+ * @param title - Window title
+ * @param message - Explanatory text
+ * @param parent - parent object
+ * @return - true if the "OK" button was pressed
+ */
+bool QuestionBox(QString title, QString message, QWidget *parent)
+{
+    QMessageBox box(parent);
+
+    box.setWindowTitle(title);
+    box.setText(message);
+
+    box.setStandardButtons(QMessageBox::StandardButton::Ok | QMessageBox::StandardButton::Cancel);
+
+    return box.exec() == QMessageBox::Ok;
+}
