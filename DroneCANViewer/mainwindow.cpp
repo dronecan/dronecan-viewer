@@ -47,13 +47,18 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    DCDebug << "Initialising MainWindow()";
+
     ui->setupUi(this);
 
     setDockNestingEnabled(true);
 
     initCANInterface();
 
+    // Perform initial UI configuration
     initMenus();
+    initStatusBar();
+    initToolBars();
     initWidgets();
     initSignalsSlots();
     initTimers();
@@ -97,7 +102,7 @@ void MainWindow::onClose()
 
 
 /**
- * @brief MainWindow::initMenus - Initialize menubar and menu items
+ * @brief MainWindow::initMenus - Initialise menubar and menu items
  */
 void MainWindow::initMenus()
 {
@@ -105,6 +110,27 @@ void MainWindow::initMenus()
 }
 
 
+/**
+ * @brief MainWindow::initStatusBar - Initialise the status bar widget
+ */
+void MainWindow::initStatusBar()
+{
+    // TODO
+}
+
+
+/**
+ * @brief MainWindow::initToolBars - Initialise application tool bars
+ */
+void MainWindow::initToolBars()
+{
+    // TODO
+}
+
+
+/**
+ * @brief MainWindow::initWidgets
+ */
 void MainWindow::initWidgets()
 {
     addDockedWidget(new CANMonitorWidget(this), ui->action_canviewer);
@@ -113,6 +139,9 @@ void MainWindow::initWidgets()
 }
 
 
+/**
+ * @brief MainWindow::initTimers - Initialise various background timers
+ */
 void MainWindow::initTimers()
 {
     // 4Hz generic update for all widgets
@@ -122,6 +151,9 @@ void MainWindow::initTimers()
 }
 
 
+/**
+ * @brief MainWindow::initCANInterface - Initialise CAN interface manager thread
+ */
 void MainWindow::initCANInterface()
 {
     canInterface = new DroneCANInterface(this);
@@ -159,6 +191,11 @@ void MainWindow::showAboutInfo()
 }
 
 
+/**
+ * @brief MainWindow::connectCAN - Attempt to connect to a CAN interface
+ *
+ * Displays a connection dialog where user can select from available interfaces.
+ */
 void MainWindow::connectCAN()
 {
     if (!canInterface) return;
@@ -451,7 +488,14 @@ void MainWindow::updateDisplay()
         ui->action_Connect->setText(tr("Connect"));
     }
 
+    updateStatusBar();
     updateWidgets();
+}
+
+
+void MainWindow::updateStatusBar()
+{
+    // TODO - Update the message in the status bar
 }
 
 

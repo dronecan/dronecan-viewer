@@ -59,11 +59,14 @@ public slots:
 protected slots:
     void updateDisplay();
     void updateWidgets();
+    void updateStatusBar();
 
 protected:
     Ui::MainWindow *ui = nullptr;
 
     void initMenus();
+    void initStatusBar();
+    void initToolBars();
     void initSignalsSlots();
     void initWidgets();
     void initTimers();
