@@ -29,7 +29,7 @@ SOFTWARE.
 #include "debug.hpp"
 
 
-CANConnectDialog::CANConnectDialog(QWidget *parent) : QDialog(parent)
+CANConnectDialog::CANConnectDialog(QString pluginName, QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
 
@@ -48,6 +48,17 @@ CANConnectDialog::CANConnectDialog(QWidget *parent) : QDialog(parent)
     ui.bitrateSelect->addItem("1000");
 
     refreshDrivers();
+
+    // Auto-select the most recently selected CAN driver
+    for (int ii = 0; ii < ui.driverSelect->count(); ii++)
+    {
+        if (ui.driverSelect->itemText(ii) == pluginName)
+        {
+            ui.driverSelect->setCurrentIndex(ii);
+
+            break;
+        }
+    }
 }
 
 
@@ -75,9 +86,12 @@ void CANConnectDialog::refreshDrivers()
 
     for (QString plugin : plugins)
     {
-        ui.driverSelect->addItem(plugin);
+        DCInfo << "Discovered CAN plugin -" << plugin;
 
-        DCDebug << "Discovered CAN plugin -" << plugin;
+        if (DroneCANInterface::GetDevices(plugin).count() > 0)
+        {
+            ui.driverSelect->addItem(plugin);
+        }
     }
 
     updateConnectButton();

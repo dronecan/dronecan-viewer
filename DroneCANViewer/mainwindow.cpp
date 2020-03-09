@@ -165,7 +165,7 @@ void MainWindow::connectCAN()
 
     if (!canInterface->isOpen())
     {
-        CANConnectDialog dlg(this);
+        CANConnectDialog dlg(canInterface->getLatestPlugin(), this);
 
         if (dlg.exec() == QDialog::Accepted)
         {
@@ -437,10 +437,11 @@ bool MainWindow::removeDockedWidget(QString title)
 void MainWindow::updateDisplay()
 {
     // Update the window title
-    QString title = "DroneCAN - " + canInterface->connectionString();
+    QString title = canInterface->connectionString();
 
     setWindowTitle(title);
 
+    // Update CAN connection window
     if (canInterface->isOpen())
     {
         ui->action_Connect->setText(tr("Disconnect"));

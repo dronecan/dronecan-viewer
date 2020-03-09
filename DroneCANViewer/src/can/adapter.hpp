@@ -71,6 +71,8 @@ public:
     uint64_t getRxCount(void) const { return rxCount; }
     uint64_t getTxCount(void) const { return txCount; }
 
+    QString getLatestPlugin(void) const { return lastPlugin; }
+
 public slots:
     virtual void run() override;
     void stop();
@@ -94,6 +96,8 @@ protected:
 
     QCanBusDevice *adapter = nullptr;
 
+    //! Most recent selected CAN plugin
+    QString lastPlugin;
 
     QString adapterName;
     QString deviceName;

@@ -34,7 +34,7 @@ class CANConnectDialog : public QDialog
     Q_OBJECT
 
 public:
-    CANConnectDialog(QWidget *parent = nullptr);
+    CANConnectDialog(QString pluginName, QWidget *parent = nullptr);
 
     QString getDriverName(void);
     QString getDeviceName(void);
